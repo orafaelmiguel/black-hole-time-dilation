@@ -10,7 +10,6 @@ A physics simulation that demonstrates gravitational time dilation effects near 
 - [Usage](#usage)
 - [Architecture](#architecture)
 - [API Reference](#api-reference)
-- [Performance](#performance)
 - [Examples](#examples)
 
 ## Overview
@@ -74,78 +73,6 @@ The differential gravitational acceleration across an object:
 F_tidal ≈ 2GMh/r³
 ```
 Where `h` is the object size.
-
-## Installation
-
-### Requirements
-
-- Python 3.8 or higher
-- pip package manager
-
-### Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-Required packages:
-- `vpython>=7.6.4` - 3D visualization engine
-- `numpy>=1.24.0` - Numerical computations
-- `matplotlib>=3.6.0` - 2D plotting
-
-### Quick Install
-
-```bash
-git clone https://github.com/yourusername/black-hole-time-dilation.git
-cd black-hole-time-dilation
-pip install -r requirements.txt
-```
-
-## Usage
-
-### Basic Simulation
-
-```bash
-python src/main.py
-```
-
-### Interactive 3D Visualization
-
-```bash
-python src/interactive_ui.py
-```
-
-### Demo with Examples
-
-```bash
-python src/demo.py
-```
-
-### Command Line Options
-
-```bash
-python src/demo.py --help
-python src/demo.py --basic    
-python src/demo.py --plot     
-python src/demo.py --3d       
-```
-
-## Architecture
-
-### Project Structure
-
-```
-black-hole-time-dilation/
-├── src/
-│   ├── physics.py          # Core physics calculations
-│   ├── visualization.py    # 2D and 3D rendering
-│   ├── interactive_ui.py   # Interactive GUI controls
-│   ├── utils.py           # Helper functions
-│   ├── main.py            # Entry point
-│   └── demo.py            # Demonstration suite
-├── requirements.txt
-└── README.md
-```
 
 ### Module Descriptions
 
@@ -288,6 +215,80 @@ def create_custom_simulation(mass):
         )
 ```
 
+<img width="1916" height="1001" alt="image" src="https://github.com/user-attachments/assets/101badcb-64f5-4009-8548-c5c45590d1b8" />
+
+## Installation
+
+### Requirements
+
+- Python 3.8 or higher
+- pip package manager
+
+### Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Required packages:
+- `vpython>=7.6.4` - 3D visualization engine
+- `numpy>=1.24.0` - Numerical computations
+- `matplotlib>=3.6.0` - 2D plotting
+
+### Quick Install
+
+```bash
+git clone https://github.com/orafaelmiguel/black-hole-time-dilation.git
+cd black-hole-time-dilation
+pip install -r requirements.txt
+```
+
+## Usage
+
+### Basic Simulation
+
+```bash
+python src/main.py
+```
+
+### Interactive 3D Visualization
+
+```bash
+python src/interactive_ui.py
+```
+
+### Demo with Examples
+
+```bash
+python src/demo.py
+```
+
+### Command Line Options
+
+```bash
+python src/demo.py --help
+python src/demo.py --basic    
+python src/demo.py --plot     
+python src/demo.py --3d       
+```
+
+## Architecture
+
+### Project Structure
+
+```
+black-hole-time-dilation/
+├── src/
+│   ├── physics.py          # Core physics calculations
+│   ├── visualization.py    # 2D and 3D rendering
+│   ├── interactive_ui.py   # Interactive GUI controls
+│   ├── utils.py           # Helper functions
+│   ├── main.py            # Entry point
+│   └── demo.py            # Demonstration suite
+├── requirements.txt
+└── README.md
+```
+
 ## Visualization Features
 
 ### 2D Graph
@@ -304,7 +305,7 @@ def create_custom_simulation(mass):
 - Trail effects: Orbital paths
 - Differential rotation speeds based on time dilation
 
-### Interactive Controls (Phase 5)
+### Interactive Controls
 - **Mass Slider**: Adjust black hole mass (1-100 solar masses)
 - **Orbit Slider**: Number of orbiting objects (1-10)
 - **Speed Slider**: Animation speed multiplier (0.1x-5x)
