@@ -1,19 +1,3 @@
-A physics simulation that demonstrates gravitational time dilation effects near black holes using Python, implementing the Schwarzschild metric from General Relativity.
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Physical Theory](#physical-theory)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Architecture](#architecture)
-- [API Reference](#api-reference)
-- [Examples](#examples)
-
-## Overview
-
-This project provides a comprehensive simulation of relativistic effects near non-rotating black holes, including accurate calculations of time dilation, orbital mechanics, and visual representations of spacetime curvature effects.
-
 ## Physical Theory
 
 ### Schwarzschild Metric
