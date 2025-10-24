@@ -1,5 +1,3 @@
-# Black hole time dilation simulator
-
 A physics simulation that demonstrates gravitational time dilation effects near black holes using Python, implementing the Schwarzschild metric from General Relativity.
 
 ## Table of Contents
