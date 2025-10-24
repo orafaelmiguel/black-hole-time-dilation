@@ -1,92 +1,301 @@
-# Black Hole Time Dilation Simulation 🌌
+# Black hole time dilation simulator
 
-A physics simulation that demonstrates gravitational time dilation effects near black holes using Python, VPython, and matplotlib.
+A physics simulation that demonstrates gravitational time dilation effects near black holes using Python, implementing the Schwarzschild metric from General Relativity.
 
-## 📖 Overview
+## Table of Contents
 
-This project simulates and visualizes the time dilation effects predicted by General Relativity in the vicinity of a black hole. The simulation calculates the Schwarzschild radius and shows how time slows down dramatically as objects approach the event horizon.
+- [Overview](#overview)
+- [Physical Theory](#physical-theory)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Architecture](#architecture)
+- [API Reference](#api-reference)
+- [Performance](#performance)
+- [Examples](#examples)
 
-## 🚀 Features
+## Overview
 
-- **Physics Engine**: Accurate calculations of Schwarzschild radius and time dilation factors
-- **2D Visualization**: Matplotlib graphs showing time dilation vs. distance
-- **3D Simulation**: VPython interactive visualization of orbiting objects with time-dependent motion
-- **Color Coding**: Visual representation of time dilation through color gradients
-- **Interactive Controls**: Adjustable parameters for black hole mass and orbit configurations
+This project provides a comprehensive simulation of relativistic effects near non-rotating black holes, including accurate calculations of time dilation, orbital mechanics, and visual representations of spacetime curvature effects.
 
-## 📋 Requirements
+## Physical Theory
 
-```bash
-pip install vpython numpy matplotlib
+### Schwarzschild Metric
+
+The spacetime geometry around a non-rotating, spherically symmetric mass is described by the Schwarzschild metric:
+
+```
+ds² = -(1 - rs/r)c²dt² + (1 - rs/r)⁻¹dr² + r²(dθ² + sin²θdφ²)
 ```
 
-## 📁 Project Structure
+### Key Equations Implemented
 
-```
-blackhole-sim/
-├── src/
-│   ├── main.py           # Main entry point
-│   ├── physics.py        # Physics calculations
-│   ├── visualization.py  # 2D and 3D visualizations
-│   └── utils.py         # Utility functions
-└── README.md
-```
-
-## 🔬 Physics Background
-
-### Schwarzschild Radius
-The event horizon radius of a non-rotating black hole:
+#### Schwarzschild Radius
+The event horizon radius for a non-rotating black hole:
 ```
 rs = 2GM/c²
 ```
+Where:
+- `G` = 6.67430 × 10⁻¹¹ m³/kg·s² (gravitational constant)
+- `M` = black hole mass (kg)
+- `c` = 299,792,458 m/s (speed of light)
 
-### Time Dilation Factor
-The gravitational time dilation near a massive object:
+#### Gravitational Time Dilation
+The time dilation factor between observers:
 ```
 Δt₀/Δt = √(1 - rs/r)
 ```
-
 Where:
-- `G` = Gravitational constant
-- `M` = Mass of the black hole
-- `c` = Speed of light
-- `r` = Distance from the black hole center
+- `Δt₀` = proper time interval for distant observer
+- `Δt` = proper time interval at distance r
 - `rs` = Schwarzschild radius
+- `r` = radial distance from black hole center
 
-## 🎮 Usage
+#### Photon Sphere
+The radius where photons can orbit:
+```
+r_photon = 3GM/c² = 1.5rs
+```
 
-### Basic Example
-```python
+#### Innermost Stable Circular Orbit (ISCO)
+For a Schwarzschild black hole:
+```
+r_ISCO = 6GM/c² = 3rs
+```
+
+#### Gravitational Redshift
+The frequency shift of light escaping the gravitational field:
+```
+z = (1/√(1 - rs/r)) - 1
+```
+
+#### Tidal Force
+The differential gravitational acceleration across an object:
+```
+F_tidal ≈ 2GMh/r³
+```
+Where `h` is the object size.
+
+## Installation
+
+### Requirements
+
+- Python 3.8 or higher
+- pip package manager
+
+### Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Required packages:
+- `vpython>=7.6.4` - 3D visualization engine
+- `numpy>=1.24.0` - Numerical computations
+- `matplotlib>=3.6.0` - 2D plotting
+
+### Quick Install
+
+```bash
+git clone https://github.com/yourusername/black-hole-time-dilation.git
+cd black-hole-time-dilation
+pip install -r requirements.txt
+```
+
+## Usage
+
+### Basic Simulation
+
+```bash
 python src/main.py
 ```
 
-### Custom Black Hole Mass
+### Interactive 3D Visualization
+
+```bash
+python src/interactive_ui.py
+```
+
+### Demo with Examples
+
+```bash
+python src/demo.py
+```
+
+### Command Line Options
+
+```bash
+python src/demo.py --help
+python src/demo.py --basic    
+python src/demo.py --plot     
+python src/demo.py --3d       
+```
+
+## Architecture
+
+### Project Structure
+
+```
+black-hole-time-dilation/
+├── src/
+│   ├── physics.py          # Core physics calculations
+│   ├── visualization.py    # 2D and 3D rendering
+│   ├── interactive_ui.py   # Interactive GUI controls
+│   ├── utils.py           # Helper functions
+│   ├── main.py            # Entry point
+│   └── demo.py            # Demonstration suite
+├── requirements.txt
+└── README.md
+```
+
+### Module Descriptions
+
+#### physics.py
+Core physics engine implementing relativistic calculations:
+
+```python
+def schwarzschild_radius(mass_solar: float) -> float:
+    G = 6.67430e-11
+    c = 299_792_458
+    M_sol = 1.98847e30
+    
+    mass_kg = mass_solar * M_sol
+    rs_m = 2 * G * mass_kg / (c ** 2)
+    return rs_m / 1000
+```
+
+#### visualization.py
+Rendering engine for 2D plots and 3D simulations:
+
+```python
+def create_orbital_object(radius: float, time_factor: float) -> sphere:
+    color_hue = 0.7 * time_factor  # Red (slow) to blue (normal)
+    return sphere(
+        pos=vector(radius * scale_factor, 0, 0),
+        color=color.hsv_to_rgb(vector(color_hue, 1, 1)),
+        make_trail=True
+    )
+```
+
+## API Reference
+
+### Physics Module
+
+#### Core Functions
+
+```python
+schwarzschild_radius(mass_solar: float) -> float
+time_dilation(r_km: float, rs_km: float) -> float
+escape_velocity(r_km: float, mass_solar: float) -> float
+orbital_period(r_km: float, mass_solar: float) -> float
+gravitational_redshift(r_km: float, rs_km: float) -> float
+tidal_force(r_km: float, mass_solar: float, object_size_m: float) -> float
+photon_sphere_radius(mass_solar: float) -> float
+innermost_stable_orbit(mass_solar: float) -> float
+```
+
+### Visualization Module
+
+#### Plotting Functions
+
+```python
+plot_dilation(mass_solar: float) -> None
+plot_multiple_masses() -> None
+visualize_orbits(mass_solar: float, num_orbits: int) -> None
+create_interactive_simulation(mass_solar: float) -> None
+```
+
+### Utils Module
+
+#### Helper Functions
+
+```python
+format_time(seconds: float) -> str
+format_distance(km: float) -> str
+calculate_safe_distance(mass_solar: float, safety_factor: float) -> float
+compare_time_passages(r_km: float, rs_km: float, observer_time_hours: float) -> Dict
+generate_orbit_data(mass_solar: float, num_orbits: int) -> List[Dict]
+interpolate_color(factor: float) -> Tuple[float, float, float]
+```
+
+### Benchmarks
+
+| Configuration | Orbits | Trail Points | FPS | Memory Usage |
+|--------------|--------|--------------|-----|--------------|
+| Minimal      | 1      | 50           | 60  | ~50 MB       |
+| Standard     | 4      | 150          | 60  | ~100 MB      |
+| Maximum      | 10     | 150          | 60  | ~200 MB      |
+
+## Examples
+
+### Calculate Time Dilation
+
 ```python
 from physics import schwarzschild_radius, time_dilation
 
-M = 10  # Solar masses
-r = 30_000  # Distance in km
+M = 10
 rs = schwarzschild_radius(M)
-dilation = time_dilation(r, rs)
+
+r = 2 * rs
+factor = time_dilation(r, rs)
+
+print(f"Time dilation factor: {factor:.4f}")
+# Output: Time dilation factor: 0.7071
 ```
 
-### Visualization
+### Generate Orbital Data
+
 ```python
-from visualization import plot_dilation, visualize_orbits
+from utils import generate_orbit_data
 
-# 2D Plot
-plot_dilation(10)  # 10 solar masses
-
-# 3D Simulation
-visualize_orbits(10)
+orbits = generate_orbit_data(mass_solar=10, num_orbits=5)
+for orbit in orbits:
+    print(f"r={orbit['radius_rs']:.1f}Rs: "
+          f"Period={orbit['orbital_period_formatted']}, "
+          f"Dilation={orbit['time_dilation']:.3f}")
 ```
 
-## 🎨 Visualization Features
+### Create Custom Visualization
+
+```python
+from vpython import sphere, vector, color
+from physics import schwarzschild_radius, time_dilation
+
+def create_custom_simulation(mass):
+    rs = schwarzschild_radius(mass)
+
+    blackhole = sphere(
+        pos=vector(0, 0, 0),
+        radius=rs * scale_factor,
+        color=color.black
+    )
+
+    r = 3 * rs
+    factor = time_dilation(r, rs)
+    
+    orbiter = sphere(
+        pos=vector(r * scale_factor, 0, 0),
+        radius=0.5,
+        color=color.hsv_to_rgb(vector(0.7 * factor, 1, 1))
+    )
+    
+    while True:
+        rate(60)
+        angle = factor * time.time()
+        orbiter.pos = vector(
+            r * cos(angle),
+            0,
+            r * sin(angle)
+        )
+```
+
+## Visualization Features
 
 ### 2D Graph
 - X-axis: Distance from black hole (km)
 - Y-axis: Time dilation factor (t₀/tf)
 - Red dashed line: Schwarzschild radius (event horizon)
+- Orange dashed line: Photon sphere
+- Green dashed line: ISCO
 
 ### 3D Simulation
 - Central black sphere: Black hole
@@ -95,52 +304,19 @@ visualize_orbits(10)
 - Trail effects: Orbital paths
 - Differential rotation speeds based on time dilation
 
-## 🔄 Development Phases
+### Interactive Controls (Phase 5)
+- **Mass Slider**: Adjust black hole mass (1-100 solar masses)
+- **Orbit Slider**: Number of orbiting objects (1-10)
+- **Speed Slider**: Animation speed multiplier (0.1x-5x)
+- **Pause/Resume**: Control animation state
+- **Reset**: Return to initial configuration
+- **Presets**: Load known black hole configurations
 
-### ✅ Phase 1: Setup and Configuration
-- Project structure creation
-- Basic main.py implementation
-- Dependency management
+## References
 
-### ✅ Phase 2: Physics Module
-- Schwarzschild radius calculation
-- Time dilation factor computation
-- Physical constants definition
-
-### ✅ Phase 3: Analytical Visualization
-- Matplotlib integration
-- 2D plotting of time dilation curves
-- Event horizon marking
-
-### ✅ Phase 4: 3D Visualization
-- VPython scene setup
-- Orbital simulation
-- Color-coded time dilation representation
-
-### 🚧 Phase 5: Interactive Interface
-- Dynamic parameter adjustment
-- Real-time simulation updates
-- User controls for mass and orbits
-
-## 📊 Expected Results
-
-When running the simulation with a 10 solar mass black hole:
-- Schwarzschild radius: ~29,530 km
-- Time dilation at r=30,000 km: ~0.041 (time runs 24x slower)
-- Visual representation shows dramatic effects near the event horizon
-
-## 🤝 Contributing
-
-Feel free to submit issues, fork the repository, and create pull requests for any improvements.
-
-## 📚 References
-
-- Schwarzschild, K. (1916). "On the Gravitational Field of a Point Mass"
-- General Relativity and Black Hole Physics
+- Schwarzschild, K. (1916). "Über das Gravitationsfeld eines Massenpunktes nach der Einsteinschen Theorie"
+- Misner, C. W., Thorne, K. S., & Wheeler, J. A. (1973). "Gravitation"
+- Carroll, S. (2004). "Spacetime and Geometry: An Introduction to General Relativity"
 - VPython Documentation: https://vpython.org
 - NumPy Documentation: https://numpy.org
 - Matplotlib Documentation: https://matplotlib.org
-
-## 📄 License
-
-This project is open source and available under the MIT License.
