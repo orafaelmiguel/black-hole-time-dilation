@@ -56,6 +56,8 @@ F_tidal ≈ 2GMh/r³
 ```
 Where `h` is the object size.
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/2891ed0f-2aab-4ccc-baf3-9b67af6b2844" />
+
 ### Module Descriptions
 
 #### physics.py
